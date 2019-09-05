@@ -1,0 +1,25 @@
+<mat-card class='text-center'>
+  <form class='text-left col-9 mx-auto'>
+    <div>
+      <button mat-raised-button type="button" [disabled]="text!==''" (click)="filePicker.click()">
+        Upload txt file
+      </button>
+      <input type="file" name="" id="" #filePicker accept=".txt" (change)="onFilePicked($event)" />
+    </div>
+    <hr>
+    <p>OR</p>
+    <hr>
+    <mat-form-field class="w-100">
+      <textarea matInput rows="4" [disabled]='file!==undefined' name='text' id='text' [(ngModel)]='text'
+        placeholder="Insert text here"></textarea>
+    </mat-form-field>
+    <mat-card-actions>
+      <button mat-button color="primary" (click)='reset()'>
+        Reset
+      </button>
+      <button mat-button color="primary" (click)="analyze()">
+        Analyze
+      </button>
+    </mat-card-actions>
+  </form>
+</mat-card>

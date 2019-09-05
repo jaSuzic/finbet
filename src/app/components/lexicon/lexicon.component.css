@@ -1,0 +1,25 @@
+table {
+  width: 100%;
+}
+
+td,
+tr {
+  width: 30%;
+}
+
+td:nth-last-child(-n+2),
+tr:nth-last-child(-n+2) {
+  width: 20%;
+}
+
+.radio-button {
+  margin: 5px;
+}
+
+.positive {
+  background-color: rgba(0, 255, 0, 0.6);
+}
+
+.negative {
+  background-color: rgba(255, 0, 0, 0.6);
+}
