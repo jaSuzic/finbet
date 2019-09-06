@@ -9,8 +9,10 @@ import {
   MatInputModule,
   MatPaginatorModule,
   MatRadioModule,
+  MatSortModule,
   MatTableModule,
   MatTabsModule,
+  MatTooltipModule,
 } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,7 +31,9 @@ const modules = [
   MatDialogModule,
   MatDividerModule,
   MatRadioModule,
-  MatIconModule
+  MatIconModule,
+  MatTooltipModule,
+  MatSortModule
 ];
 
 @NgModule({

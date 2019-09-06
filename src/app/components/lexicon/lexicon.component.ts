@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
 import { Word } from './../../models/word.model';
@@ -8,10 +8,12 @@ import { AddEditModalComponent } from './../add-edit-modal/add-edit-modal.compon
 @Component({
   selector: "app-lexicon",
   templateUrl: "./lexicon.component.html",
-  styleUrls: ["./lexicon.component.css"]
+  styleUrls: ["./lexicon.component.css"],
+  encapsulation: ViewEncapsulation.None
 })
 export class LexiconComponent implements OnInit {
-  displayedColumns: string[] = ["word", "grade", "edit", "delete"];
+  // displayedColumns: string[] = ["word", "grade", "edit", "delete"];
+  displayedColumns: string[] = ["word", "grade", "buttons"];
   dataSource: MatTableDataSource<Word>;
   radioFilter = "all";
   localDb: Array<Word>;

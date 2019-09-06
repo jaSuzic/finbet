@@ -4,12 +4,17 @@ table {
 
 td,
 tr {
-  width: 40%;
+  width: 30%;
 }
 
-td:nth-last-child(-n+2),
+/* td:nth-last-child(-n+2),
 tr:nth-last-child(-n+2) {
   width: 10%;
+} */
+
+td:last-child,
+tr:last-child {
+  width: 40%;
 }
 
 .radio-button {

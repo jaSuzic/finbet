@@ -8,7 +8,7 @@
       <input type="file" name="" id="" #filePicker accept=".txt" (change)="onFilePicked($event)" />
     </div>
     <hr>
-    <p>OR</p>
+    <p class="text-center">OR</p>
     <hr>
     <mat-form-field class="w-100">
       <textarea matInput rows="4" [disabled]='file!==undefined' name='text' id='text' [(ngModel)]='text'
@@ -28,8 +28,11 @@
 
 <ng-template #showResult>
   <mat-card class="text-center">
+    <mat-card-title>Result of analyze</mat-card-title>
     <mat-card-content [class.positive]='result > 0' [class.negative]='result < 0' class="p-3 rounded">
       Analyze result of entered text is {{resultText}} ({{result.toFixed(2)}}).
+      <!-- Sentiment analizis of entered text is positive/negative -->
+      <!-- The sentiment analysis of the document attached is positive/negative/neutral -->
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button [mat-dialog-close]>
