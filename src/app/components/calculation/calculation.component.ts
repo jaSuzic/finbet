@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material';
 
 import { CalcService } from './../../services/calc.service';
 
@@ -8,37 +9,40 @@ import { CalcService } from './../../services/calc.service';
   styleUrls: ["./calculation.component.css"]
 })
 export class CalculationComponent implements OnInit {
+  @ViewChild("filePicker", { static: true }) filePicker: ElementRef;
   text: string = "";
   file: File;
   arrayOfWords: Array<string>;
+  result: number;
+  resultText: string;
 
-  constructor(private calcService: CalcService) {}
+  constructor(private calcService: CalcService, public dialog: MatDialog) {}
 
   ngOnInit() {}
 
   onFilePicked(e) {
+    console.log("trigered onFilePicked: e - ", e);
+
     this.file = (event.target as HTMLInputElement).files[0];
+    console.log(
+      "TCL: CalculationComponent -> onFilePicked -> this.file",
+      this.file
+    );
     let reader = new FileReader();
     reader.onload = e => {
-      this.makeCorrectArrayOfWords(e.target["result"]);
-      // console.log("rezultati onload: ", e.target);
+      this.makeCorrectArrayOfWords(e.target["result"] as string);
     };
     reader.readAsText(this.file);
-    /* Ovde iskoristiti fileReader, nesto ovako:
-    const file = (event.target as HTMLInputElement).files[0];
-    this.form.patchValue({ image: file });
-    this.form.get("image").updateValueAndValidity();
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.imagePreview = reader.result as string;
-    };
-    reader.readAsDataURL(file);
-     */
   }
 
   reset() {
+    console.log(
+      "TCL: CalculationComponent -> reset -> this.filePicker.input",
+      this.filePicker
+    );
     this.file = undefined;
     this.text = "";
+    this.filePicker.nativeElement.value = null;
   }
 
   makeCorrectArrayOfWords(words: string) {
@@ -58,14 +62,16 @@ export class CalculationComponent implements OnInit {
     );
   }
 
-  analyze() {
-    // let regex = /[.,]/g;
-    // let regex = /[^A-Za-z0-9\s]/g;
+  analyze(templateRef) {
     if (this.text && this.text !== "") {
       this.makeCorrectArrayOfWords(this.text);
-    } else {
     }
-    console.log(this.text);
-    this.calcService.calculate(["nice", "excellent", "Ja"]);
+    this.result = this.calcService.calculate(this.arrayOfWords);
+    let dialogRef = this.dialog.open(templateRef, {
+      width: "350px"
+    });
+    if (this.result > 0) this.resultText = "positive";
+    else if (this.result < 0) this.resultText = "negative";
+    else this.resultText = "neutral";
   }
 }

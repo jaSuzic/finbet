@@ -1,3 +1,17 @@
 input[type='file'] {
   visibility: hidden;
+  width: 10px;
+}
+
+.positive {
+  background-color: rgba(0, 255, 0, 0.6);
+}
+
+.negative {
+  background-color: rgba(255, 0, 0, 0.6);
+}
+
+.upload-button {
+  min-width: 130px !important;
+  height: 35px;
 }

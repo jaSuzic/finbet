@@ -22,9 +22,12 @@ export class AddEditModalComponent implements OnInit {
   ngOnInit() {
     this.editForm = new FormGroup({
       word: new FormControl(this.data.word, Validators.required),
-      grade: new FormControl(this.data.grade, Validators.required)
+      grade: new FormControl(this.data.grade, [
+        Validators.required,
+        Validators.min(-1),
+        Validators.max(1)
+      ])
     });
-    console.log("evo ga data: ", this.data);
   }
 
   save() {
@@ -39,14 +42,6 @@ export class AddEditModalComponent implements OnInit {
         },
         err => {}
       );
-      // this.wordService.editWord(word).subscribe(
-      //   res => {
-      //     console.log(res);
-      //   },
-      //   err => {
-      //     console.log(err);
-      //   }
-      // );
     } else {
       this.wordService.addNewWord(word).subscribe(res => {
         console.log("TCL: AddEditModalComponent -> save -> res", res);

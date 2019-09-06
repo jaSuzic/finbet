@@ -13,11 +13,11 @@ export class CalcService {
     let sum = 0;
     for (let i = 0; i < words.length; i++) {
       for (let j = 0; j < currentDb.length; j++) {
-        if (words[i] === currentDb[j].word) {
+        if (words[i] === currentDb[j].word.toLowerCase()) {
           sum += currentDb[j].grade;
         }
       }
     }
-    console.log(sum);
+    return sum;
   }
 }

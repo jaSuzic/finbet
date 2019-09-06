@@ -5,6 +5,7 @@ import {
   MatDialogModule,
   MatDividerModule,
   MatFormFieldModule,
+  MatIconModule,
   MatInputModule,
   MatPaginatorModule,
   MatRadioModule,
@@ -27,7 +28,8 @@ const modules = [
   MatCardModule,
   MatDialogModule,
   MatDividerModule,
-  MatRadioModule
+  MatRadioModule,
+  MatIconModule
 ];
 
 @NgModule({
