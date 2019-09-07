@@ -31,21 +31,21 @@ export class AddEditModalComponent implements OnInit {
   }
 
   save() {
+    //just in case if user change html disabled value next line won't allow adding wrong values
+    if (this.editForm.invalid) return;
     let word = new Word();
     word.word = this.editForm.value.word;
     word.grade = this.editForm.value.grade;
     if (this.data.edit) {
       word.id = this.data.id;
       this.wordService.updateWord(word).subscribe(
-        res => {
-          console.log("res: ", res);
-        },
-        err => {}
+        res => {},
+        err => {
+          console.log(err);
+        }
       );
     } else {
-      this.wordService.addNewWord(word).subscribe(res => {
-        console.log("TCL: AddEditModalComponent -> save -> res", res);
-      });
+      this.wordService.addNewWord(word).subscribe(res => {});
     }
     this.dialogRef.close();
   }

@@ -5,26 +5,53 @@ table {
 td,
 tr {
   width: 30%;
+  padding-left: 8rem !important; 
+  font-size: 16px !important;
+  font-weight: bold;
 }
 
-/* td:nth-last-child(-n+2),
-tr:nth-last-child(-n+2) {
-  width: 10%;
-} */
+td:first-child, tr:first-child {
+  padding-left: calc(24px + 8rem) !important; 
+}
 
 td:last-child,
 tr:last-child {
   width: 40%;
+  padding-left: 0 !important;
 }
 
 .radio-button {
   margin: 5px;
 }
 
-.positive {
-  background-color: rgba(0, 255, 0, 0.6);
+.mat-sort-header-button{
+  margin-left: 8rem !important;
 }
 
-.negative {
-  background-color: rgba(255, 0, 0, 0.6);
+.positiveText {
+  color: green;
+}
+
+.negativeText {
+  color: red;
+}
+
+.mat-row:nth-child(odd){
+  background-color: lightgray;
+  }
+
+@media only screen and (max-width: 768px) {
+  td,
+  tr {
+    padding-left: 0 !important; 
+    width: 33% !important;
+  }
+
+  td:first-child, tr:first-child {
+    padding-left: 24px !important;  
+  }
+
+  .mat-sort-header-button{
+    margin-left: 0px !important;
+  }
 }

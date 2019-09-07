@@ -17,25 +17,20 @@ export class LexiconComponent implements OnInit {
   dataSource: MatTableDataSource<Word>;
   radioFilter = "all";
   localDb: Array<Word>;
+  wordForDelete: Word;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild("deleteModal", { static: true }) deleteModal;
 
   constructor(private wordService: WordsService, public dialog: MatDialog) {}
 
   ngOnInit() {
     this.wordService.loadDb().subscribe(res => {
-      console.log("res u initu: ", res);
       this.localDb = res;
       this.generateTableData(this.localDb);
     });
-    // this.wordService.checkDbStatus().subscribe(res => {
-    //   let updatedDb = this.wordService.getCurrentDb();
-    //   this.generateTableData(updatedDb);
-    // });
-    this.wordService.getDbObs().subscribe(res => {
-      console.log("TCL: LexiconComponent -> Sub na promenu -> res", res);
-    });
+    this.wordService.getDbObs().subscribe(res => {});
   }
 
   filterWords(filterValue) {
@@ -54,20 +49,33 @@ export class LexiconComponent implements OnInit {
       data: {
         edit: true,
         ...selectedItem
-      }
+      },
+      disableClose: true
     });
   }
 
   confirmDelete(selectedWord) {
-    if (
-      confirm(
-        "Are you sure you want to delete word: " + selectedWord.word + "?"
-      )
-    ) {
-      this.wordService
-        .deleteWord(selectedWord.id)
-        .subscribe(res => {}, err => {});
-    }
+    this.wordForDelete = selectedWord;
+    let dialogRef = this.dialog.open(this.deleteModal, {
+      width: "350px",
+      autoFocus: false
+    });
+
+    dialogRef.afterClosed().subscribe(
+      res => {
+        if (res) {
+          this.wordService.deleteWord(selectedWord.id).subscribe(
+            res => {},
+            err => {
+              console.log(err);
+            }
+          );
+        }
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
   openAddNewModal() {
@@ -75,7 +83,8 @@ export class LexiconComponent implements OnInit {
       width: "450px",
       data: {
         edit: false
-      }
+      },
+      disableClose: true
     });
   }
 
@@ -88,13 +97,6 @@ export class LexiconComponent implements OnInit {
     } else {
       filteredData = this.localDb;
     }
-    console.log("filtered data: ", filteredData);
     this.generateTableData(filteredData);
-    console.log(e.value);
-  }
-
-  //this should be removed
-  clear() {
-    this.wordService.clearDb();
   }
 }

@@ -2,18 +2,33 @@
   <mat-card-title class="col-9 mx-auto">
     {{ data.edit ? "Edit" : "Add new" }}
   </mat-card-title>
-  <form [formGroup]='editForm' class='text-center'>
+  <form [formGroup]="editForm" class="text-center">
     <mat-form-field class="col-9">
-      <input matInput type='text' placeholder="Word" required formControlName='word'>
+      <input
+        matInput
+        type="text"
+        placeholder="Word"
+        required
+        formControlName="word"
+      />
     </mat-form-field>
     <mat-form-field class="col-9">
-      <input matInput type='number' min="-1" max="1" step="0.1" placeholder="Grade" required formControlName='grade'>
+      <input
+        matInput
+        type="number"
+        min="-1"
+        max="1"
+        step="0.1"
+        placeholder="Grade"
+        required
+        formControlName="grade"
+      />
     </mat-form-field>
     <mat-card-actions class="d-flex justify-content-around col-9 mx-auto">
       <button mat-raised-button [mat-dialog-close]>
         Close
       </button>
-      <button mat-raised-button (click)="save()">
+      <button mat-raised-button [disabled]="!editForm.valid" (click)="save()">
         {{ data.edit ? "Save" : "Add" }}
       </button>
     </mat-card-actions>

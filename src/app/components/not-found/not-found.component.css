@@ -1,0 +1,19 @@
+.zero {
+    color: #fff;
+    text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+}
+
+.big {
+	font-family: 'Saira Stencil One', cursive;
+	font-size: 25rem;
+	line-height: 1;
+}
+
+.text {
+	font-size: 3rem;
+	font-family: 'Saira Stencil One', cursive;
+}
+
+.button-text {
+	font-size: 2rem;
+}

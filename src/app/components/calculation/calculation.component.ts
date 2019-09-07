@@ -10,6 +10,7 @@ import { CalcService } from './../../services/calc.service';
 })
 export class CalculationComponent implements OnInit {
   @ViewChild("filePicker", { static: true }) filePicker: ElementRef;
+  @ViewChild("warning", { static: true }) warningModal;
   text: string = "";
   file: File;
   arrayOfWords: Array<string>;
@@ -21,13 +22,14 @@ export class CalculationComponent implements OnInit {
   ngOnInit() {}
 
   onFilePicked(e) {
-    console.log("trigered onFilePicked: e - ", e);
-
     this.file = (event.target as HTMLInputElement).files[0];
-    console.log(
-      "TCL: CalculationComponent -> onFilePicked -> this.file",
-      this.file
-    );
+    if (this.file.type !== "text/plain") {
+      this.file = undefined;
+      let dialogRef = this.dialog.open(this.warningModal, {
+        width: "350px"
+      });
+      return;
+    }
     let reader = new FileReader();
     reader.onload = e => {
       this.makeCorrectArrayOfWords(e.target["result"] as string);
@@ -36,10 +38,6 @@ export class CalculationComponent implements OnInit {
   }
 
   reset() {
-    console.log(
-      "TCL: CalculationComponent -> reset -> this.filePicker.input",
-      this.filePicker
-    );
     this.file = undefined;
     this.text = "";
     this.filePicker.nativeElement.value = null;
@@ -56,10 +54,6 @@ export class CalculationComponent implements OnInit {
       .replace(regex, "")
       .split(" ")
       .filter(word => word != "");
-    console.log(
-      "TCL: CalculationComponent -> makeCorrectArrayOfWords -> this.arrayOfWords",
-      this.arrayOfWords
-    );
   }
 
   analyze(templateRef) {

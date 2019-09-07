@@ -1,42 +1,90 @@
-<mat-card class='text-center'>
-  <form class='text-left col-9 mx-auto' #calcForm='ngForm'>
-    <div class="d-flex w-100 flex-row justify-content-start">
-      <button mat-raised-button class="upload-button" type="button" [disabled]="text!==''" (click)="filePicker.click()">
+<mat-card class="text-center">
+  <form class="text-left col-12 col-md-9 mx-auto" #calcForm="ngForm">
+    <div class="d-flex w-100 justify-content-start">
+      <button
+        mat-raised-button
+        class="upload-button"
+        type="button"
+        [disabled]="text !== ''"
+        (click)="filePicker.click()"
+      >
         Upload txt file
       </button>
-      <div *ngIf='file' class='small pl-2 align-self-center'>Uploaded file: {{file.name}}</div>
-      <input type="file" name="" id="" #filePicker accept=".txt" (change)="onFilePicked($event)" />
+      <div *ngIf="file" class="small pl-2 align-self-center">
+        Uploaded file: {{ file.name }}
+      </div>
+      <input
+        type="file"
+        name=""
+        id=""
+        #filePicker
+        accept=".txt"
+        (change)="onFilePicked($event)"
+      />
     </div>
-    <hr>
+    <hr />
     <p class="text-center">OR</p>
-    <hr>
+    <hr />
     <mat-form-field class="w-100">
-      <textarea matInput rows="4" [disabled]='file!==undefined' name='text' id='text' [(ngModel)]='text'
-        placeholder="Insert text here"></textarea>
+      <textarea
+        matInput
+        rows="4"
+        [disabled]="file !== undefined"
+        name="text"
+        id="text"
+        [(ngModel)]="text"
+        placeholder="Insert text here"
+      ></textarea>
     </mat-form-field>
     <mat-card-actions class="d-flex justify-content-around">
-      <button mat-stroked-button color="primary" (click)='reset(calcForm)'>
+      <button mat-stroked-button color="primary" (click)="reset(calcForm)">
         Reset
       </button>
-      <button mat-stroked-button [disabled]='!text && !file' color="primary" (click)="analyze(showResult)">
+      <button
+        mat-stroked-button
+        [disabled]="!text && !file"
+        color="primary"
+        (click)="analyze(showResult)"
+      >
         Analyze
       </button>
     </mat-card-actions>
   </form>
 </mat-card>
 
+<!-- Modal for displaying results -->
 
 <ng-template #showResult>
   <mat-card class="text-center">
     <mat-card-title>Result of analyze</mat-card-title>
-    <mat-card-content [class.positive]='result > 0' [class.negative]='result < 0' class="p-3 rounded">
-      Analyze result of entered text is {{resultText}} ({{result.toFixed(2)}}).
-      <!-- Sentiment analizis of entered text is positive/negative -->
-      <!-- The sentiment analysis of the document attached is positive/negative/neutral -->
+    <mat-card-content
+      [class.positive]="result > 0"
+      [class.negative]="result < 0"
+      class="p-3 rounded"
+    >
+      Analyze result of entered text is {{ resultText }} ({{
+        result.toFixed(2)
+      }}).
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button [mat-dialog-close]>
         Close
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</ng-template>
+
+<!-- Modal for displaying warning if user try to upload file that isn't .txt -->
+
+<ng-template #warning>
+  <mat-card class="text-center">
+    <mat-card-title>WARNING</mat-card-title>
+    <mat-card-content
+      >You can upload only file with txt extensions.</mat-card-content
+    >
+    <mat-card-actions>
+      <button mat-raised-button [mat-dialog-close]>
+        Ok
       </button>
     </mat-card-actions>
   </mat-card>
