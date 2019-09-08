@@ -32,6 +32,7 @@ export class LexiconComponent implements OnInit {
     this.wordService.loadDb().subscribe(res => {
       this.localDb = res;
       this.generateTableData(this.localDb);
+      this.radioFilter = "all";
     });
   }
 
@@ -54,6 +55,13 @@ export class LexiconComponent implements OnInit {
       },
       disableClose: true
     });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.radioFilter = "all";
+        this.generateTableData(this.localDb);
+      }
+    });
   }
 
   confirmDelete(selectedWord) {
@@ -62,7 +70,6 @@ export class LexiconComponent implements OnInit {
       width: "350px",
       autoFocus: false
     });
-
     dialogRef.afterClosed().subscribe(
       res => {
         if (res) {
@@ -72,6 +79,7 @@ export class LexiconComponent implements OnInit {
                 duration: 5000,
                 panelClass: ["correct-snackbar"]
               });
+              this.radioFilter = "all";
             },
             err => {
               this._snackBar.open(
@@ -104,6 +112,13 @@ export class LexiconComponent implements OnInit {
         edit: false
       },
       disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.radioFilter = "all";
+        this.generateTableData(this.localDb);
+      }
     });
   }
 

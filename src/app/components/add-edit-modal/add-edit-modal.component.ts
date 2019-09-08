@@ -70,6 +70,6 @@ export class AddEditModalComponent implements OnInit {
         }
       );
     }
-    this.dialogRef.close();
+    this.dialogRef.close(true);
   }
 }
