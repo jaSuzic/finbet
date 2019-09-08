@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatPaginator, MatSnackBar, MatSort, MatTableDataSource } from '@angular/material';
 
 import { Word } from './../../models/word.model';
 import { WordsService } from './../../services/words.service';
@@ -12,25 +12,27 @@ import { AddEditModalComponent } from './../add-edit-modal/add-edit-modal.compon
   encapsulation: ViewEncapsulation.None
 })
 export class LexiconComponent implements OnInit {
-  // displayedColumns: string[] = ["word", "grade", "edit", "delete"];
   displayedColumns: string[] = ["word", "grade", "buttons"];
   dataSource: MatTableDataSource<Word>;
   radioFilter = "all";
   localDb: Array<Word>;
   wordForDelete: Word;
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild("deleteModal", { static: true }) deleteModal;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild("deleteModal", { static: false }) deleteModal;
 
-  constructor(private wordService: WordsService, public dialog: MatDialog) {}
+  constructor(
+    private wordService: WordsService,
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     this.wordService.loadDb().subscribe(res => {
       this.localDb = res;
       this.generateTableData(this.localDb);
     });
-    this.wordService.getDbObs().subscribe(res => {});
   }
 
   filterWords(filterValue) {
@@ -65,14 +67,31 @@ export class LexiconComponent implements OnInit {
       res => {
         if (res) {
           this.wordService.deleteWord(selectedWord.id).subscribe(
-            res => {},
+            res => {
+              this._snackBar.open("Word deleted.", "OK", {
+                duration: 5000,
+                panelClass: ["correct-snackbar"]
+              });
+            },
             err => {
+              this._snackBar.open(
+                "Problem ocurred, word wasn't deleted.",
+                "OK",
+                {
+                  duration: 8000,
+                  panelClass: ["warning-snackbar"]
+                }
+              );
               console.log(err);
             }
           );
         }
       },
       err => {
+        this._snackBar.open("Problem ocurred, word wasn't deleted.", "OK", {
+          duration: 8000,
+          panelClass: ["warning-snackbar"]
+        });
         console.log(err);
       }
     );

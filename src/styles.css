@@ -1,3 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+
+.warning-snackbar {
+	background-color: rgba(242, 38, 19, .85);
+	color: whitesmoke;
+}
+  
+.correct-snackbar {
+	background-color: rgba(46, 204, 113, .85);
+	color: whitesmoke;
+}
+  

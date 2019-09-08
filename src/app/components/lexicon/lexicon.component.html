@@ -89,14 +89,14 @@
 <!-- Modal that will be opened before deleting word -->
 
 <ng-template #deleteModal>
-  <mat-card>
+  <mat-card class="text-center">
     <mat-card-title>Confirm delete</mat-card-title>
     <mat-card-content
       >Are you sure that you want to delete word:
       <strong>{{ wordForDelete.word }}</strong> with grade
       <strong>{{ wordForDelete.grade }}</strong
-      >?</mat-card-content
-    >
+      >?
+    </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button [mat-dialog-close]>
         No

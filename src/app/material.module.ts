@@ -9,6 +9,7 @@ import {
   MatInputModule,
   MatPaginatorModule,
   MatRadioModule,
+  MatSnackBarModule,
   MatSortModule,
   MatTableModule,
   MatTabsModule,
@@ -33,7 +34,8 @@ const modules = [
   MatRadioModule,
   MatIconModule,
   MatTooltipModule,
-  MatSortModule
+  MatSortModule,
+  MatSnackBarModule
 ];
 
 @NgModule({

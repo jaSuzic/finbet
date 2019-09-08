@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { LocalStorage } from '@ngx-pwa/local-storage';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 import { Word } from '../models/word.model';
-import { environment } from './../../environments/environment';
 
-const BACKEND_URL = environment.apiUrl;
 var currentDb: Array<Word>;
 var dbSub = new Subject<Array<Word>>();
 
@@ -13,8 +11,6 @@ var dbSub = new Subject<Array<Word>>();
   providedIn: "root"
 })
 export class WordsService {
-  private dbUpdated = new BehaviorSubject(false);
-
   constructor(protected localStorage: LocalStorage) {}
 
   loadDb() {
@@ -35,7 +31,9 @@ export class WordsService {
             { id: 5, word: "ugly", grade: -0.5 }
           ];
           this.localStorage.setItem("lexicon_local", defaultDb).subscribe(
-            res => {},
+            res => {
+              console.log("DB created");
+            },
             err => {
               console.log(err);
             }
@@ -54,10 +52,6 @@ export class WordsService {
 
   getCurrentDb() {
     return currentDb;
-  }
-
-  getDbObs() {
-    return dbSub.asObservable();
   }
 
   addNewWord(word: Word) {
@@ -85,9 +79,5 @@ export class WordsService {
     currentDb.splice(position, 1);
     dbSub.next(currentDb);
     return this.localStorage.setItem("lexicon_local", currentDb);
-  }
-
-  checkDbStatus() {
-    return this.dbUpdated.asObservable();
   }
 }

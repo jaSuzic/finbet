@@ -9,8 +9,8 @@ import { CalcService } from './../../services/calc.service';
   styleUrls: ["./calculation.component.css"]
 })
 export class CalculationComponent implements OnInit {
-  @ViewChild("filePicker", { static: true }) filePicker: ElementRef;
-  @ViewChild("warning", { static: true }) warningModal;
+  @ViewChild("filePicker", { static: false }) filePicker: ElementRef;
+  @ViewChild("warning", { static: false }) warningModal;
   text: string = "";
   file: File;
   arrayOfWords: Array<string>;
@@ -44,16 +44,7 @@ export class CalculationComponent implements OnInit {
   }
 
   makeCorrectArrayOfWords(words: string) {
-    //regex which match all alphanumerics and spaces
-    let regex = /[^A-Za-z0-9\s]/g;
-    //regex which match / = + - and new lines
-    let regexNewLine = /[\/\=\+\-\r?\n|\r]/g;
-    this.arrayOfWords = words
-      .toLowerCase()
-      .replace(regexNewLine, " ")
-      .replace(regex, "")
-      .split(" ")
-      .filter(word => word != "");
+    this.arrayOfWords = this.calcService.makeCorrectArrayOfWords(words);
   }
 
   analyze(templateRef) {

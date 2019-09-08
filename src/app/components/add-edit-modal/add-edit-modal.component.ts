@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatSnackBar } from '@angular/material';
 import { Word } from 'src/app/models/word.model';
 import { WordsService } from 'src/app/services/words.service';
 
@@ -16,7 +16,8 @@ export class AddEditModalComponent implements OnInit {
     public dialogRef: MatDialogRef<AddEditModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private wordService: WordsService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -39,13 +40,35 @@ export class AddEditModalComponent implements OnInit {
     if (this.data.edit) {
       word.id = this.data.id;
       this.wordService.updateWord(word).subscribe(
-        res => {},
+        res => {
+          this._snackBar.open("Edit was successful.", "OK", {
+            duration: 5000,
+            panelClass: ["correct-snackbar"]
+          });
+        },
         err => {
+          this._snackBar.open("Problem ocurred, word wasn't updated.", "OK", {
+            duration: 8000,
+            panelClass: ["warning-snackbar"]
+          });
           console.log(err);
         }
       );
     } else {
-      this.wordService.addNewWord(word).subscribe(res => {});
+      this.wordService.addNewWord(word).subscribe(
+        res => {
+          this._snackBar.open("Word added successfully.", "OK", {
+            duration: 5000,
+            panelClass: ["correct-snackbar"]
+          });
+        },
+        err => {
+          this._snackBar.open("Problem ocurred, word wasn't added.", "OK", {
+            duration: 8000,
+            panelClass: ["warning-snackbar"]
+          });
+        }
+      );
     }
     this.dialogRef.close();
   }
