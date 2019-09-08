@@ -22,18 +22,12 @@ export class CalcService {
   }
 
   calculate(words: Array<string>) {
-    console.log("TCL: CalcService -> calculate -> words", words);
     let currentDb = this.wordService.getCurrentDb();
     let sum = 0;
     for (let i = 0; i < words.length; i++) {
       for (let j = 0; j < currentDb.length; j++) {
         if (words[i] === currentDb[j].word.toLowerCase()) {
           sum += currentDb[j].grade;
-          console.log(
-            "TCL: CalcService -> calculate -> words[i]",
-            words[i],
-            sum
-          );
         }
       }
     }
